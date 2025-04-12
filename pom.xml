@@ -7,6 +7,8 @@
     <groupId>com.aleksey</groupId>
     <artifactId>servlet_java</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
+    <name>Servlets Tutorial</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -22,10 +24,6 @@
 
         <mysql.connector.j.version>9.2.0</mysql.connector.j.version>
 
-<!--        <flyway.core.version>11.3.3</flyway.core.version>-->
-<!--        <flyway.maven.version>11.3.3</flyway.maven.version>-->
-<!--        <flyway.mysql.version>11.3.3</flyway.mysql.version>-->
-
         <hibernate.core.version>6.6.9.Final</hibernate.core.version>
         <hibernate.entyty.manager.version>5.6.15.Final</hibernate.entyty.manager.version>
 
@@ -34,6 +32,8 @@
         <javax.servlet.api.version>4.0.1</javax.servlet.api.version>
 
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
+
+        <apache.commons.fileupload.version>1.2.2</apache.commons.fileupload.version>
     </properties>
 
     <dependencies>
@@ -102,9 +102,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${apache.commons.fileupload.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
+
+        <finalName>servlet_java</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.flywaydb</groupId>
@@ -150,8 +159,8 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.plugin.version}</version>
                 <configuration>
+                    <port>8080</port>
                     <path>/</path>
-                    <port>8088</port>
                 </configuration>
             </plugin>
         </plugins>

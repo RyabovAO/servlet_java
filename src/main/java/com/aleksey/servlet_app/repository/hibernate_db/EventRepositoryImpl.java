@@ -35,8 +35,9 @@ public class EventRepositoryImpl implements EventRepository {
     public List<Event> readAll() {
         List<Event> eventList;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM Event", Event.class);
+            Query query = session.createQuery("FROM Event e JOIN FETCH e.user JOIN FETCH e.file", Event.class);
             eventList = query.getResultList();
+//            eventList.toString();
         }
         return eventList;
     }

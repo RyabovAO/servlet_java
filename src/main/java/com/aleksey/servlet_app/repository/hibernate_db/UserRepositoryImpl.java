@@ -35,7 +35,7 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> readAll() {
         List<User> userList;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM User LEFT JOIN FETCH u.events", User.class);
+            Query query = session.createQuery("FROM User u LEFT JOIN FETCH u.events", User.class);
             userList = query.getResultList();
         }
         return userList;
