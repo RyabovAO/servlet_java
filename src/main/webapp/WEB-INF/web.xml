@@ -5,35 +5,35 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>Servlets Tutorial</display-name>
+    <display-name>Servlets Tutorial App</display-name>
 
     <servlet>
-        <servlet-name>UserServlet</servlet-name>
-        <servlet-class>com.aleksey.servlet_app.controller.UserServlet</servlet-class>
+        <servlet-name>users_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.Users</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>EventServlet</servlet-name>
-        <servlet-class>com.aleksey.servlet_app.controller.EventServlet</servlet-class>
+        <servlet-name>events_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.Events</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>ServletUpload</servlet-name>
-        <servlet-class>com.aleksey.servlet_app.controller.ServletUpload</servlet-class>
+        <servlet-name>upload_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.Upload</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UserServlet</servlet-name>
-        <url-pattern>/UserServlet</url-pattern>
+        <servlet-name>users_servlet</servlet-name>
+        <url-pattern>/api/v1/users</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>EventServlet</servlet-name>
-        <url-pattern>/EventServlet</url-pattern>
+        <servlet-name>events_servlet</servlet-name>
+        <url-pattern>/api/v1/events</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>ServletUpload</servlet-name>
-        <url-pattern>/ServletUpload</url-pattern>
+        <servlet-name>upload_servlet</servlet-name>
+        <url-pattern>/api/v1/file/upload</url-pattern>
     </servlet-mapping>
 </web-app>

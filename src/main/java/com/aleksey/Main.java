@@ -1,5 +1,6 @@
 package com.aleksey;
 
+import com.aleksey.servlet_app.controller.UserController;
 import com.aleksey.servlet_app.model.Event;
 import com.aleksey.servlet_app.model.EventType;
 import com.aleksey.servlet_app.model.File;
@@ -10,17 +11,27 @@ import com.aleksey.servlet_app.repository.UserRepository;
 import com.aleksey.servlet_app.repository.hibernate_db.EventRepositoryImpl;
 import com.aleksey.servlet_app.repository.hibernate_db.FileRepositoryImpl;
 import com.aleksey.servlet_app.repository.hibernate_db.UserRepositoryImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        UserRepository userRepository = new UserRepositoryImpl();
-        FileRepository fileRepository = new FileRepositoryImpl();
-        EventRepository eventRepository = new EventRepositoryImpl();
 
-        List<Event> list = eventRepository.readAll();
-        list.forEach(u -> System.out.println(u.toString()));
+        UserController userController = new UserController();
+        String id = "1";
+        List<User> users = userController.getAllUser();
+
+        User currentUser = users.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+
+        System.out.println(currentUser);
+
+//        FileRepository fileRepository = new FileRepositoryImpl();
+//        EventRepository eventRepository = new EventRepositoryImpl();
+
+//        List<Event> list = eventRepository.readAll();
+//        list.forEach(u -> System.out.println(u.toString()));
 
 //        List<User> list = userRepository.readAll();
 //        list.forEach(u -> System.out.println(u.toString()));
@@ -30,7 +41,7 @@ public class Main {
 //        file.setName("test.txt");
 //
 //        User user = new User();
-//        user.setName("first");
+//        user.setName("second");
 //
 //        Event event = new Event();
 //        event.setUser(user);

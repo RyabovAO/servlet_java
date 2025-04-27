@@ -1,11 +1,8 @@
-package com.aleksey.servlet_app.controller;
+package com.aleksey.servlet_app.servlet;
 
 import com.aleksey.servlet_app.model.Event;
-import com.aleksey.servlet_app.model.User;
 import com.aleksey.servlet_app.repository.EventRepository;
-import com.aleksey.servlet_app.repository.UserRepository;
 import com.aleksey.servlet_app.repository.hibernate_db.EventRepositoryImpl;
-import com.aleksey.servlet_app.repository.hibernate_db.UserRepositoryImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class EventServlet extends HttpServlet {
+public class Events extends HttpServlet {
 
     private static final long serialVersionUID = 102831973239L;
 
