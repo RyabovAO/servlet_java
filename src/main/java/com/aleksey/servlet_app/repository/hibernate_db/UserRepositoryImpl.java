@@ -44,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User update(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.getTransaction();
+            session.beginTransaction();
             session.merge(user);
             session.getTransaction().commit();
         }

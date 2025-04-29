@@ -10,23 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-public class Events extends HttpServlet {
+public class EventById extends HttpServlet {
 
-    private static final long serialVersionUID = 102831973239L;
     private EventController eventController = new EventController();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Event> list = eventController.getAllEvent();
+        String id = req.getPathInfo().replace("/", "");
+        Event event = eventController.getEventById(Integer.parseInt(id));
+
         PrintWriter messageWriter = resp.getWriter();
 
-        for (int i = 0; i < list.size(); i++) {
-            String json = objectMapper.writeValueAsString(list.get(i));
-            messageWriter.write(json + "\n");
-        }
-        messageWriter.close();
+        String json = objectMapper.writeValueAsString(event);
+        messageWriter.write(json);
     }
 }

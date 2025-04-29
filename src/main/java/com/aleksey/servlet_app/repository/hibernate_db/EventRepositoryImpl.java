@@ -24,7 +24,7 @@ public class EventRepositoryImpl implements EventRepository {
     public Event readById(Integer eventId) {
         Event event;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM Event e WHERE e.id = :id", Event.class)
+            Query query = session.createQuery("FROM Event e JOIN FETCH e.user JOIN FETCH e.file WHERE e.id = :id", Event.class)
                     .setParameter("id", eventId);
             event = (Event) query.getSingleResult();
         }
@@ -45,7 +45,7 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public Event update(Event event) {
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.getTransaction();
+            session.beginTransaction();
             session.merge(event);
             session.getTransaction().commit();
         }

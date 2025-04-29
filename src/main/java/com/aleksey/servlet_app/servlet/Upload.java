@@ -2,6 +2,8 @@ package com.aleksey.servlet_app.servlet;
 
 
 import com.aleksey.servlet_app.controller.UserController;
+import com.aleksey.servlet_app.model.Event;
+import com.aleksey.servlet_app.model.EventType;
 import com.aleksey.servlet_app.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.fileupload.FileItem;
@@ -22,7 +24,7 @@ public class Upload extends HttpServlet {
 
     private final String FILE_PATH = "src/main/file_storage/";
     private File file;
-
+    private UserController userController = new UserController();
     private final int fileMaxSize = 100 * 1024;
     private final int memMaxSize = 100 * 1024;
 
@@ -30,7 +32,6 @@ public class Upload extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        UserController userController = new UserController();
         PrintWriter writer = resp.getWriter();
         String id = req.getParameter("id");
 
@@ -46,6 +47,8 @@ public class Upload extends HttpServlet {
             ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
             servletFileUpload.setSizeMax(fileMaxSize);
 
+            String fileName = null;
+
             try {
                 List fileItemList = servletFileUpload.parseRequest(req);
 
@@ -53,13 +56,27 @@ public class Upload extends HttpServlet {
                 while (iter.hasNext()) {
                     FileItem fileItem = (FileItem) iter.next();
                     if (!fileItem.isFormField()) {
-                        String fileName = fileItem.getName();
+                        fileName = fileItem.getName();
                         file = new File(FILE_PATH + fileName);
                         fileItem.write(file);
                         String json = new ObjectMapper().writeValueAsString(fileName);
                         writer.write(json);
                     }
                 }
+
+                com.aleksey.servlet_app.model.File newFile = new com.aleksey.servlet_app.model.File();
+                newFile.setFilePath(FILE_PATH);
+                newFile.setName(fileName);
+
+                Event event = new Event();
+                event.setUser(currentUser);
+                event.setEventType(EventType.DOWNLOAD);
+                event.setFile(newFile);
+
+                currentUser.addEvent(event);
+
+                userController.updateUser(currentUser);
+
             } catch (FileUploadException e) {
                 throw new RuntimeException(e);
             } catch (Exception e) {

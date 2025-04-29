@@ -1,7 +1,7 @@
 package com.aleksey.servlet_app.servlet;
 
-import com.aleksey.servlet_app.controller.EventController;
-import com.aleksey.servlet_app.model.Event;
+import com.aleksey.servlet_app.controller.FileController;
+import com.aleksey.servlet_app.model.File;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -12,15 +12,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class Events extends HttpServlet {
+public class Files extends HttpServlet {
 
-    private static final long serialVersionUID = 102831973239L;
-    private EventController eventController = new EventController();
+    private FileController fileController = new FileController();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Event> list = eventController.getAllEvent();
+        List<File> list = fileController.getAllFile();
         PrintWriter messageWriter = resp.getWriter();
 
         for (int i = 0; i < list.size(); i++) {

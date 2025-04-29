@@ -44,7 +44,7 @@ public class FileRepositoryImpl implements FileRepository {
     @Override
     public File update(File file) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.getTransaction();
+            session.beginTransaction();
             session.merge(file);
             session.getTransaction().commit();
         }

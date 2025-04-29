@@ -13,14 +13,39 @@
     </servlet>
 
     <servlet>
+        <servlet-name>user_by_id_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.UserById</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>events_servlet</servlet-name>
         <servlet-class>com.aleksey.servlet_app.servlet.Events</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>event_by_id_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.EventById</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>upload_servlet</servlet-name>
         <servlet-class>com.aleksey.servlet_app.servlet.Upload</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>files_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.Files</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>file_by_id_servlet</servlet-name>
+        <servlet-class>com.aleksey.servlet_app.servlet.FileById</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>user_by_id_servlet</servlet-name>
+        <url-pattern>/api/v1/user/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>users_servlet</servlet-name>
@@ -33,7 +58,22 @@
     </servlet-mapping>
 
     <servlet-mapping>
+        <servlet-name>event_by_id_servlet</servlet-name>
+        <url-pattern>/api/v1/event/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>upload_servlet</servlet-name>
         <url-pattern>/api/v1/file/upload</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>files_servlet</servlet-name>
+        <url-pattern>/api/v1/files</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>file_by_id_servlet</servlet-name>
+        <url-pattern>/api/v1/file/*</url-pattern>
     </servlet-mapping>
 </web-app>

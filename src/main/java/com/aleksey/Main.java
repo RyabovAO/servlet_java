@@ -1,5 +1,6 @@
 package com.aleksey;
 
+import com.aleksey.servlet_app.controller.EventController;
 import com.aleksey.servlet_app.controller.UserController;
 import com.aleksey.servlet_app.model.Event;
 import com.aleksey.servlet_app.model.EventType;
@@ -19,19 +20,11 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        UserController userController = new UserController();
-        String id = "1";
-        List<User> users = userController.getAllUser();
-
-        User currentUser = users.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
-
-        System.out.println(currentUser);
-
-//        FileRepository fileRepository = new FileRepositoryImpl();
-//        EventRepository eventRepository = new EventRepositoryImpl();
-
-//        List<Event> list = eventRepository.readAll();
-//        list.forEach(u -> System.out.println(u.toString()));
+//        UserController userController = new UserController();
+//        EventController eventController = new EventController();
+//
+//        Event event = eventController.getEventById(1);
+//        System.out.println(event);
 
 //        List<User> list = userRepository.readAll();
 //        list.forEach(u -> System.out.println(u.toString()));
