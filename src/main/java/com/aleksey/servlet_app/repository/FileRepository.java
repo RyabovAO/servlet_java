@@ -1,7 +1,7 @@
 package com.aleksey.servlet_app.repository;
 
-import com.aleksey.servlet_app.model.File;
+import com.aleksey.servlet_app.entity.FileEntity;
 
-public interface FileRepository extends GenericRepository<File, Integer> {
+public interface FileRepository extends GenericRepository<FileEntity, Integer> {
 
 }

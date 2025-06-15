@@ -1,4 +1,4 @@
-package com.aleksey.servlet_app.model;
+package com.aleksey.servlet_app.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class User {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
-    private List<Event> events = new ArrayList<>();
+    private List<EventEntity> events = new ArrayList<>();
 
-    public void addEvent(Event event) {
+    public void addEvent(EventEntity event) {
         events.add(event);
     }
 

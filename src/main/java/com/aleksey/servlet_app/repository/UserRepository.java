@@ -1,7 +1,7 @@
 package com.aleksey.servlet_app.repository;
 
-import com.aleksey.servlet_app.model.User;
+import com.aleksey.servlet_app.entity.UserEntity;
 
-public interface UserRepository extends GenericRepository<User, Integer> {
+public interface UserRepository extends GenericRepository<UserEntity, Integer> {
 
 }

@@ -1,7 +1,7 @@
 package com.aleksey.servlet_app.repository;
 
-import com.aleksey.servlet_app.model.Event;
+import com.aleksey.servlet_app.entity.EventEntity;
 
-public interface EventRepository extends GenericRepository<Event, Integer> {
+public interface EventRepository extends GenericRepository<EventEntity, Integer> {
 
 }

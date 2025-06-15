@@ -1,4 +1,4 @@
-package com.aleksey.servlet_app.model;
+package com.aleksey.servlet_app.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "files")
-public class File {
+public class FileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

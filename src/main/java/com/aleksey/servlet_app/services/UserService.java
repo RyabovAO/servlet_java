@@ -1,36 +1,36 @@
 package com.aleksey.servlet_app.services;
 
-import com.aleksey.servlet_app.model.User;
+import com.aleksey.servlet_app.entity.UserEntity;
 import com.aleksey.servlet_app.repository.UserRepository;
 import com.aleksey.servlet_app.repository.hibernate_db.UserRepositoryImpl;
 
 import java.util.List;
 
-public class UserServices {
+public class UserService {
 
     private UserRepository userRepository;
 
-    public UserServices() {
+    public UserService() {
         this.userRepository = new UserRepositoryImpl();
     }
 
-    public UserServices(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
+    public UserEntity createUser(UserEntity user) {
         return userRepository.create(user);
     }
 
-    public User updateUser(User user) {
+    public UserEntity updateUser(UserEntity user) {
         return userRepository.update(user);
     }
 
-    public List<User> getAllUser() {
+    public List<UserEntity> getAllUser() {
         return userRepository.readAll();
     }
 
-    public User getUserById(Integer id) {
+    public UserEntity getUserById(Integer id) {
         return userRepository.readById(id);
     }
 
