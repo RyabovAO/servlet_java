@@ -36,6 +36,10 @@
         <apache.commons.fileupload.version>1.2.2</apache.commons.fileupload.version>
 
         <jackson.core.version>2.18.3</jackson.core.version>
+
+        <flyway.maven.plugin>11.3.3</flyway.maven.plugin>
+        <flyway.core>11.3.3</flyway.core>
+        <flyway.mySql>11.3.3</flyway.mySql>
     </properties>
 
     <dependencies>
@@ -76,13 +80,13 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>11.3.3</version>
+            <version>${flyway.core}</version>
         </dependency>
 
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>11.3.3</version>
+            <version>${flyway.mySql}</version>
         </dependency>
 
         <dependency>
@@ -126,7 +130,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>11.3.3</version>
+                <version>${flyway.maven.plugin}</version>
                 <configuration>
                     <url>jdbc:mysql://localhost/servlet_test_db</url>
                     <user>root</user>

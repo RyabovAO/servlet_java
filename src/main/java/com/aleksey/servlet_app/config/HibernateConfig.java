@@ -11,7 +11,11 @@ public class HibernateConfig {
     public static SessionFactory getSessionFactory() {
 
         if(sessionFactory == null) {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            sessionFactory = new Configuration()
+                    .addAnnotatedClass(com.aleksey.servlet_app.entity.EventEntity.class)
+                    .addAnnotatedClass(com.aleksey.servlet_app.entity.FileEntity.class)
+                    .addAnnotatedClass(com.aleksey.servlet_app.entity.UserEntity.class)
+                    .buildSessionFactory();
         }
         return sessionFactory;
     }

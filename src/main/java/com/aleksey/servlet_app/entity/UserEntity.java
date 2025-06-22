@@ -7,6 +7,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,14 +30,5 @@ public class UserEntity {
 
     public void addEvent(EventEntity event) {
         events.add(event);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", events = ()" +
-                '}';
     }
 }

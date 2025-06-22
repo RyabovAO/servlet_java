@@ -26,7 +26,7 @@ public class EventRepositoryImpl implements EventRepository {
         try(Session session = HibernateConfig.getSession()) {
             Query query = session.createQuery("FROM EventEntity e JOIN FETCH e.user JOIN FETCH e.file WHERE e.id = :id", EventEntity.class)
                     .setParameter("id", eventId);
-            event = (EventEntity) query.getSingleResult();
+            event = (EventEntity) query.getResultList().stream().findFirst().orElse(null);
         }
         return event;
     }

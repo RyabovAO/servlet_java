@@ -1,9 +1,11 @@
 package com.aleksey.servlet_app.services;
 
+import com.aleksey.servlet_app.entity.FileEntity;
 import com.aleksey.servlet_app.entity.UserEntity;
 import com.aleksey.servlet_app.repository.UserRepository;
 import com.aleksey.servlet_app.repository.hibernate_db.UserRepositoryImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -19,15 +21,18 @@ public class UserService {
     }
 
     public UserEntity createUser(UserEntity user) {
+        if(user.getName().isEmpty() || user.getName() == null) return null;
         return userRepository.create(user);
     }
 
     public UserEntity updateUser(UserEntity user) {
+        if(user.getId() == null || user.getName().isEmpty() || user.getName() == null) return null;
         return userRepository.update(user);
     }
 
     public List<UserEntity> getAllUser() {
-        return userRepository.readAll();
+        List<UserEntity> list = userRepository.readAll();
+        return !list.isEmpty() ? list : new ArrayList<>();
     }
 
     public UserEntity getUserById(Integer id) {

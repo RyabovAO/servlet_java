@@ -1,9 +1,11 @@
 package com.aleksey.servlet_app.services;
 
 import com.aleksey.servlet_app.entity.EventEntity;
+import com.aleksey.servlet_app.entity.UserEntity;
 import com.aleksey.servlet_app.repository.EventRepository;
 import com.aleksey.servlet_app.repository.hibernate_db.EventRepositoryImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventService {
@@ -27,7 +29,8 @@ public class EventService {
     }
 
     public List<EventEntity> getAllEvent() {
-        return eventRepository.readAll();
+        List<EventEntity> list = eventRepository.readAll();
+        return !list.isEmpty() ? list : new ArrayList<>();
     }
 
     public EventEntity getEventById(Integer id) {

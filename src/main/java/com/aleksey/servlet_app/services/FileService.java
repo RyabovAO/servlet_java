@@ -26,18 +26,24 @@ public class FileService {
 
     private final String FILE_PATH = "src/main/file_storage/";
     private java.io.File file;
-    private UserService userService = new UserService();
+
     private final int fileMaxSize = 100 * 1024;
     private final int memMaxSize = 100 * 1024;
 
-    private FileRepository fileRepository;
+    private final FileRepository fileRepository;
+    private UserService userService;
+    private DiskFileItemFactory diskFileItemFactory;
+    private ServletFileUpload servletFileUpload;
 
     public FileService() {
         this.fileRepository = new FileRepositoryImpl();
+        this.diskFileItemFactory = new DiskFileItemFactory(memMaxSize, new java.io.File(FILE_PATH));
+        this.servletFileUpload = new ServletFileUpload();
     }
 
-    public FileService(FileRepository fileRepository) {
+    public FileService(FileRepository fileRepository, UserService userService) {
         this.fileRepository = fileRepository;
+        this.userService = userService;
     }
 
     public FileEntity createFile(FileEntity file) {
@@ -54,72 +60,71 @@ public class FileService {
     }
 
     public FileEntity getFileById(Integer id) {
-        if(getAllFile().size() >= id) {
-            return fileRepository.readById(id);
-        } else {
-            return new FileEntity(0, "file with id = " + id + " not found", "");
-        }
+        return fileRepository.readById(id);
     }
 
     public void deleteFileById(Integer id) {
         fileRepository.delete(id);
     }
 
-    public void upload(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void upload(HttpServletRequest req, HttpServletResponse resp) {
 
-        PrintWriter writer = resp.getWriter();
+        PrintWriter writer = null;
+        try {
+            writer = resp.getWriter();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         String id = HttpUtils.getIdFromRequest(req);
 
-        UserEntity currentUser = userService.getAllUser().stream()
-                .filter(user -> user.getId().equals(Integer.parseInt(id)))
-                .findFirst()
-                .orElse(null);
+        UserEntity currentUser = userService.getUserById(Integer.parseInt(id));
 
         if (currentUser == null) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "ID not found");
-        } else {
-            DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-            diskFileItemFactory.setSizeThreshold(memMaxSize);
-            diskFileItemFactory.setRepository(new java.io.File(FILE_PATH));
-
-            ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
-            servletFileUpload.setSizeMax(fileMaxSize);
-
-            String fileName = null;
-
             try {
-                List fileItemList = servletFileUpload.parseRequest(req);
-
-                Iterator iter = fileItemList.iterator();
-                while (iter.hasNext()) {
-                    FileItem fileItem = (FileItem) iter.next();
-                    if (!fileItem.isFormField()) {
-                        fileName = fileItem.getName();
-                        file = new java.io.File(FILE_PATH + fileName);
-                        fileItem.write(file);
-                        String json = JsonUtils.writeJsonAsString(fileName);
-                        writer.write(json);
-                    }
-                }
-
-                FileEntity newFile = new FileEntity();
-                newFile.setFilePath(FILE_PATH);
-                newFile.setName(fileName);
-
-                EventEntity event = new EventEntity();
-                event.setUser(currentUser);
-                event.setEventType(EventType.DOWNLOAD);
-                event.setFile(newFile);
-
-                currentUser.addEvent(event);
-
-                userService.updateUser(currentUser);
-
-            } catch (FileUploadException e) {
-                throw new RuntimeException(e);
-            } catch (Exception e) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "ID not found");
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            return;
+        }
+
+        servletFileUpload.setFileItemFactory(diskFileItemFactory);
+        servletFileUpload.setSizeMax(fileMaxSize);
+
+        String fileName = null;
+
+        try {
+            List fileItemList = servletFileUpload.parseRequest(req);
+
+            Iterator iter = fileItemList.iterator();
+            while (iter.hasNext()) {
+                FileItem fileItem = (FileItem) iter.next();
+                if (!fileItem.isFormField()) {
+                    fileName = fileItem.getName();
+                    file = new java.io.File(FILE_PATH + fileName);
+                    fileItem.write(file);
+                    String json = JsonUtils.writeJsonAsString(fileName);
+                    writer.write(json);
+                }
+            }
+
+            FileEntity newFile = new FileEntity();
+            newFile.setFilePath(FILE_PATH);
+            newFile.setName(fileName);
+
+            EventEntity event = new EventEntity();
+            event.setUser(currentUser);
+            event.setEventType(EventType.DOWNLOAD);
+            event.setFile(newFile);
+
+            currentUser.addEvent(event);
+
+            userService.updateUser(currentUser);
+
+        } catch (FileUploadException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

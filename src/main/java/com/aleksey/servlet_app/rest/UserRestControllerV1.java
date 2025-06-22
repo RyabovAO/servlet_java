@@ -17,8 +17,8 @@ import java.util.List;
 public class UserRestControllerV1 extends HttpServlet {
 
     private static final long serialVersionUID = 102331973239L;
-    private UserService userService = new UserService();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final UserService userService = new UserService();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,7 +47,7 @@ public class UserRestControllerV1 extends HttpServlet {
         PrintWriter writer = resp.getWriter();
 
         UserEntity user = objectMapper.readValue(jsonData, UserEntity.class);
-        userService.createUser(user);
+        user = userService.createUser(user);
 
         String json = JsonUtils.writeJsonAsString(user);
         writer.write(json);

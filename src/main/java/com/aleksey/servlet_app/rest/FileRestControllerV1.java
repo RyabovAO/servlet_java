@@ -15,7 +15,7 @@ import java.util.List;
 
 public class FileRestControllerV1 extends HttpServlet {
 
-    private FileService fileService = new FileService();
+    private final FileService fileService = new FileService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

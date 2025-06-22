@@ -26,7 +26,7 @@ public class FileRepositoryImpl implements FileRepository {
         try (Session session = HibernateConfig.getSession()) {
             Query query = session.createQuery("FROM FileEntity f WHERE f.id = :id", FileEntity.class)
                     .setParameter("id", fileId);
-            file = (FileEntity) query.getSingleResult();
+            file = (FileEntity) query.getResultList().stream().findFirst().orElse(null);
         }
         return file;
     }

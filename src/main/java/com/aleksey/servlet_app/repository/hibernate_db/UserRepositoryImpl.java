@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = HibernateConfig.getSession()) {
             Query query = session.createQuery("FROM UserEntity u LEFT JOIN FETCH u.events WHERE u.id = :id", UserEntity.class)
                     .setParameter("id", userId);
-            user = (UserEntity) query.getSingleResult();
+            user = (UserEntity) query.getResultList().stream().findFirst().orElse(null);
         }
         return user;
     }

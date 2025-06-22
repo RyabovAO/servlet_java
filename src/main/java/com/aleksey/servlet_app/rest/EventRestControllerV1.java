@@ -16,7 +16,7 @@ import java.util.List;
 public class EventRestControllerV1 extends HttpServlet {
 
     private static final long serialVersionUID = 102831973239L;
-    private EventService eventService = new EventService();
+    private final EventService eventService = new EventService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
